@@ -28,6 +28,7 @@ public class VentanaRegistro extends JFrame {
 		this.setTitle("Registro");
 		this.setSize(1000, 600);
 		this.setLayout(null);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		
 		this.lblNombre = new JLabel("Nombre");
