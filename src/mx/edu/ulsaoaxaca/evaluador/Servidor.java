@@ -14,8 +14,7 @@ public class Servidor {
 	
 	
 	public static void main(String ... args) {
-		VentanaEvaluador ventanaEvaluador = new VentanaEvaluador();
-		EvaluadorControlador controlador = new EvaluadorControlador(ventanaEvaluador);
+		EvaluadorControlador controlador = new EvaluadorControlador();
 		
 	}
 	

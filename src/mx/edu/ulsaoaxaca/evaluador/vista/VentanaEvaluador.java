@@ -18,28 +18,26 @@ public class VentanaEvaluador extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		
-		// Inicializar el panel de pestañas
-		this.panelPestañas = new JTabbedPane();
+		
 		
 		
 		//Inicializar los paneles
-		this.panelPreguntas = new PanelPreguntas();
+		//this.panelPreguntas = new PanelPreguntas();
 		this.panelBitacora = new PanelBitacora();
-		this.panelEvaluacion = new PanelEvaluacion();
-		//this.panelReporte = new PanelReporte();
+		this.panelReporte = new PanelReporte();
 		
-		//agregar los paneles al panel de pestañas
 		
+	}
+	
+	public void addTabs() {
+		System.out.println(this.panelEvaluacion);
+		// Inicializar el panel de pestañas
+		this.panelPestañas = new JTabbedPane();
 		this.panelPestañas.addTab("Preguntas", this.panelPreguntas);
-		this.panelPestañas.addTab("Bitacora", this.panelBitacora);
 		this.panelPestañas.addTab("Evaluación", this.panelEvaluacion);
-		//this.panelPestañas.addTab("Reporte", this.panelReporte);
+		this.panelPestañas.addTab("Reporte", this.panelReporte);
 		
 		this.add(panelPestañas);
-		
-		
-		this.setVisible(true);
-		
 	}
 
 	public JTabbedPane getPanelPestañas() {
