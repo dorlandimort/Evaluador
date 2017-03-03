@@ -41,6 +41,48 @@ public class VentanaEvaluador extends JFrame {
 		this.setVisible(true);
 		
 	}
+
+	public JTabbedPane getPanelPestañas() {
+		return panelPestañas;
+	}
+
+	public void setPanelPestañas(JTabbedPane panelPestañas) {
+		this.panelPestañas = panelPestañas;
+	}
+
+	public PanelPreguntas getPanelPreguntas() {
+		return panelPreguntas;
+	}
+
+	public void setPanelPreguntas(PanelPreguntas panelPreguntas) {
+		this.panelPreguntas = panelPreguntas;
+	}
+
+	public PanelBitacora getPanelBitacora() {
+		return panelBitacora;
+	}
+
+	public void setPanelBitacora(PanelBitacora panelBitacora) {
+		this.panelBitacora = panelBitacora;
+	}
+
+	public PanelEvaluacion getPanelEvaluacion() {
+		return panelEvaluacion;
+	}
+
+	public void setPanelEvaluacion(PanelEvaluacion panelEvaluacion) {
+		this.panelEvaluacion = panelEvaluacion;
+	}
+
+	public PanelReporte getPanelReporte() {
+		return panelReporte;
+	}
+
+	public void setPanelReporte(PanelReporte panelReporte) {
+		this.panelReporte = panelReporte;
+	}
+	
+	
 	
 
 }

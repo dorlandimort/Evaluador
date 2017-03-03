@@ -13,6 +13,9 @@ public class EvaluadorControlador {
 	
 	public void init() {
 		this.mostrarVentanaEvaluador();
+		this.ventanaEvaluador.getPanelPreguntas().getBtnSalir().addActionListener(e -> {
+			this.cerrarVentanaEvaluador();
+		});
 	}
 	
 	public void mostrarVentanaEvaluador() {
