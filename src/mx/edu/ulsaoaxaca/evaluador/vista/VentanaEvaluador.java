@@ -8,7 +8,7 @@ public class VentanaEvaluador extends JFrame {
 	
 	private JTabbedPane panelPestañas;
 	private PanelPreguntas panelPreguntas;
-	private PanelRespuestas panelRespuestas;
+	private PanelBitacora panelBitacora;
 	private PanelEvaluacion panelEvaluacion;
 	private PanelReporte panelReporte;
 	
@@ -24,16 +24,16 @@ public class VentanaEvaluador extends JFrame {
 		
 		//Inicializar los paneles
 		this.panelPreguntas = new PanelPreguntas();
-		this.panelRespuestas = new PanelRespuestas();
+		this.panelBitacora = new PanelBitacora();
 		this.panelEvaluacion = new PanelEvaluacion();
-		this.panelReporte = new PanelReporte();
+		//this.panelReporte = new PanelReporte();
 		
 		//agregar los paneles al panel de pestañas
 		
 		this.panelPestañas.addTab("Preguntas", this.panelPreguntas);
-		this.panelPestañas.addTab("Respuestas", this.panelRespuestas);
+		this.panelPestañas.addTab("Bitacora", this.panelBitacora);
 		this.panelPestañas.addTab("Evaluación", this.panelEvaluacion);
-		this.panelPestañas.addTab("Reporte", this.panelReporte);
+		//this.panelPestañas.addTab("Reporte", this.panelReporte);
 		
 		this.add(panelPestañas);
 		
