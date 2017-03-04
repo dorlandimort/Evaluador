@@ -8,7 +8,7 @@ public class VentanaEvaluador extends JFrame {
 	
 	private JTabbedPane panelPestañas;
 	private PanelPreguntas panelPreguntas;
-	private PanelRespuestas panelRespuestas;
+	private PanelBitacora panelBitacora;
 	private PanelEvaluacion panelEvaluacion;
 	private PanelReporte panelReporte;
 	
@@ -18,29 +18,69 @@ public class VentanaEvaluador extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		
-		// Inicializar el panel de pestañas
-		this.panelPestañas = new JTabbedPane();
+		
 		
 		
 		//Inicializar los paneles
-		this.panelPreguntas = new PanelPreguntas();
-		this.panelRespuestas = new PanelRespuestas();
-		this.panelEvaluacion = new PanelEvaluacion();
+		//this.panelPreguntas = new PanelPreguntas();
+		this.panelBitacora = new PanelBitacora();
 		this.panelReporte = new PanelReporte();
 		
-		//agregar los paneles al panel de pestañas
 		
+	}
+	
+	public void addTabs() {
+		System.out.println(this.panelEvaluacion);
+		// Inicializar el panel de pestañas
+		this.panelPestañas = new JTabbedPane();
 		this.panelPestañas.addTab("Preguntas", this.panelPreguntas);
-		this.panelPestañas.addTab("Respuestas", this.panelRespuestas);
 		this.panelPestañas.addTab("Evaluación", this.panelEvaluacion);
 		this.panelPestañas.addTab("Reporte", this.panelReporte);
 		
 		this.add(panelPestañas);
-		
-		
-		this.setVisible(true);
-		
 	}
+
+	public JTabbedPane getPanelPestañas() {
+		return panelPestañas;
+	}
+
+	public void setPanelPestañas(JTabbedPane panelPestañas) {
+		this.panelPestañas = panelPestañas;
+	}
+
+	public PanelPreguntas getPanelPreguntas() {
+		return panelPreguntas;
+	}
+
+	public void setPanelPreguntas(PanelPreguntas panelPreguntas) {
+		this.panelPreguntas = panelPreguntas;
+	}
+
+	public PanelBitacora getPanelBitacora() {
+		return panelBitacora;
+	}
+
+	public void setPanelBitacora(PanelBitacora panelBitacora) {
+		this.panelBitacora = panelBitacora;
+	}
+
+	public PanelEvaluacion getPanelEvaluacion() {
+		return panelEvaluacion;
+	}
+
+	public void setPanelEvaluacion(PanelEvaluacion panelEvaluacion) {
+		this.panelEvaluacion = panelEvaluacion;
+	}
+
+	public PanelReporte getPanelReporte() {
+		return panelReporte;
+	}
+
+	public void setPanelReporte(PanelReporte panelReporte) {
+		this.panelReporte = panelReporte;
+	}
+	
+	
 	
 
 }
