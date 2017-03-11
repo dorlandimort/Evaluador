@@ -7,8 +7,8 @@ public class Cliente {
 	
 	public static void main(String ... args) {
 		
-		VentanaRegistro ventanaRegistro = new VentanaRegistro();
-		ClienteControlador clienteControlador = new ClienteControlador(ventanaRegistro);
+		
+		ClienteControlador clienteControlador = new ClienteControlador();
 		clienteControlador.mostrarVentanaRegistro();
 		
 	}

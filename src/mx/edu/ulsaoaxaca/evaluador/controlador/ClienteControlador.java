@@ -8,15 +8,19 @@ public class ClienteControlador {
 	VentanaRegistro ventanaRegistro;
 	VentanaAspirante ventanaAspirante;
 	
-	public ClienteControlador(VentanaRegistro ventanaRegistro) {
-		this.ventanaRegistro = ventanaRegistro;
-		this.ventanaRegistro.setVisible(true);
+	public ClienteControlador() {
+		this.ventanaRegistro = new VentanaRegistro();
+		this.mostrarVentanaRegistro();
 		this.init();
 	}
 	
 	public void init() {
-		this.ventanaRegistro.getBtnIngresar().addActionListener(e -> this.mostrarVentanaClientePrincipal());
-		this.ventanaRegistro.getBtnSalir().addActionListener(e -> this.cerrarVentanaRegistro());
+		this.ventanaRegistro.getBtnIngresar().addActionListener(e -> {
+			this.mostrarVentanaClientePrincipal();
+		});
+		this.ventanaRegistro.getBtnSalir().addActionListener(e -> {
+			this.cerrarVentanaRegistro();
+		});
 	}
 	
 	public void mostrarVentanaRegistro() {

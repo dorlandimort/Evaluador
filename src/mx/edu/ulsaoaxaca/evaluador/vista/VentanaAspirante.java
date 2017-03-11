@@ -8,7 +8,7 @@ public class VentanaAspirante extends JFrame {
 	private JTabbedPane panelPestañas;
 	
 	private PanelRespuestasCliente panelRespuestas;
-	private PanelReporteCliente panelReporte;
+	private PanelReporte panelReporte;
 	
 	public VentanaAspirante() {
 		this.setSize(1000, 600);
@@ -17,7 +17,7 @@ public class VentanaAspirante extends JFrame {
 		panelPestañas = new JTabbedPane();
 		
 		this.panelRespuestas = new PanelRespuestasCliente();
-		this.panelReporte = new PanelReporteCliente();
+		this.panelReporte = new PanelReporte();
 		
 		this.panelPestañas.addTab("Respuestas", this.panelRespuestas);
 		this.panelPestañas.addTab("Reporte", this.panelReporte);
