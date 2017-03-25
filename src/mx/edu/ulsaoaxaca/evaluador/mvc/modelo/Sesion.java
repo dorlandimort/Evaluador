@@ -1,4 +1,4 @@
-package mx.edu.ulsaoaxaca.evaluador.modelo;
+package mx.edu.ulsaoaxaca.evaluador.mvc.modelo;
 
 import java.util.Date;
 import java.util.List;
@@ -7,6 +7,11 @@ public class Sesion {
 	
 	private int id;
 	private Date fecha;
+	private String evaluador;
+	
+	public Sesion() {
+		this.fecha = new Date();
+	}
 	
 	private List<Aspirante> aspirantes;
 	
@@ -27,6 +32,12 @@ public class Sesion {
 	}
 	public void setAspirantes(List<Aspirante> aspirantes) {
 		this.aspirantes = aspirantes;
+	}
+	public String getEvaluador() {
+		return evaluador;
+	}
+	public void setEvaluador(String evaluador) {
+		this.evaluador = evaluador;
 	}
 	
 	

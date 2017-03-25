@@ -1,21 +1,22 @@
-package mx.edu.ulsaoaxaca.evaluador.modelo.dao;
+package mx.edu.ulsaoaxaca.evaluador.servicios.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataSource {
 	
-	private Connection conn;
+	private Connection connection;
 	
 	public DataSource() {
 		try {
 			
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			
-			conn =
+			this.connection =
 					DriverManager.getConnection("jdbc:mysql://localhost/evaluador?" +
 				                                   "user=root&password=toor");
 			
@@ -34,26 +35,34 @@ public class DataSource {
 		}
 	}
 	
-	public Object ejecutarConsulta(String consulta) {
+	public Object ejecutarConsulta(PreparedStatement st) {
 		ResultSet rs = null;
 		try {
-			Statement st = conn.createStatement();
-			rs = st.executeQuery(consulta);
+			rs = st.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return rs;
 	}
 	
-	public int ejecutarActualizacion(String actualizacion) {
+	public int ejecutarActualizacion(PreparedStatement st) {
 		int result = 0;
 		try {
-			Statement st = conn.createStatement();
-			result =  st.executeUpdate(actualizacion);
+			result =  st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return result;
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConn(Connection connection) {
+		this.connection = connection;
+	}
+	
+	
 }

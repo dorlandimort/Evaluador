@@ -1,8 +1,9 @@
-package mx.edu.ulsaoaxaca.evaluador.vista;
+package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 public class VentanaEvaluador extends JFrame {
 	
@@ -12,17 +13,12 @@ public class VentanaEvaluador extends JFrame {
 	private PanelEvaluacion panelEvaluacion;
 	private PanelReporte panelReporte;
 	
+	
 	public VentanaEvaluador() {
 		this.setTitle("Servidor");
 		this.setSize(1000, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		
-		
-		
-		
-		//Inicializar los paneles
-		//this.panelPreguntas = new PanelPreguntas();
 		this.panelBitacora = new PanelBitacora();
 		this.panelReporte = new PanelReporte();
 		

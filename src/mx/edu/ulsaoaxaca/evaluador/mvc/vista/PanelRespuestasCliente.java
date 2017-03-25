@@ -1,4 +1,4 @@
-package mx.edu.ulsaoaxaca.evaluador.vista;
+package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 
 public class PanelRespuestasCliente extends JPanel {
 
-	
+	private JLabel lblEvaluador;
 	private JLabel lblEscribirRespuesta;
 	private JLabel lblPreguntas;
 	private JLabel lblRespuestasEnviadas;
@@ -31,6 +31,9 @@ public class PanelRespuestasCliente extends JPanel {
 		panel1.setBounds(10, 10, 965, 230);
 		TitledBorder title = BorderFactory.createTitledBorder("");
 		panel1.setBorder(title);
+		
+		this.lblEvaluador = new JLabel();
+		this.lblEvaluador.setBounds(50, 10, 250, 20);
 		
 		this.lblEscribirRespuesta = new JLabel("Escribir respuesta");
 		this.lblEscribirRespuesta.setBounds(15, 30, 150, 20);
@@ -67,7 +70,8 @@ public class PanelRespuestasCliente extends JPanel {
 		this.add(jtxRespuestasEnviadas);
 		this.add(lblPreguntas);
 		this.add(txtEscribirRespuesta);
-
+		
+		this.add(lblEvaluador);
 		this.add(lblRespuestasEnviadas);
 		//this.add(jtxEscribirRespuesta);
 		this.add(lblEscribirRespuesta);
@@ -171,6 +175,16 @@ public class PanelRespuestasCliente extends JPanel {
 
 	public void setJtxRespuestasEnviadas(JTextArea jtxRespuestasEnviadas) {
 		this.jtxRespuestasEnviadas = jtxRespuestasEnviadas;
+	}
+
+
+	public JLabel getLblEvaluador() {
+		return lblEvaluador;
+	}
+
+
+	public void setLblEvaluador(JLabel lblEvaluador) {
+		this.lblEvaluador = lblEvaluador;
 	}
 	
 	

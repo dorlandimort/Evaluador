@@ -1,4 +1,4 @@
-package mx.edu.ulsaoaxaca.evaluador.vista;
+package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
 import javax.swing.JPanel;
 

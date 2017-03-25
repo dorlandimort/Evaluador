@@ -1,7 +1,8 @@
-package mx.edu.ulsaoaxaca.evaluador.vista;
+package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,6 +15,7 @@ public class PanelPreguntas extends JPanel {
 	private TitledBorder bordePreguntas;
 	private TitledBorder bordeAspirantes;
 	
+	private JLabel lblEvaluador;
 	private JTextArea txtPregunta;
 	
 	private JList listaPreguntas;
@@ -39,6 +41,9 @@ public class PanelPreguntas extends JPanel {
 		this.panelEscribirPregunta.setBounds(50, 50, 500, 200);
 		this.panelEscribirPregunta.setBorder(this.bordeEscribirPregunta);
 		this.panelEscribirPregunta.setLayout(null);
+		
+		this.lblEvaluador = new JLabel();
+		this.lblEvaluador.setBounds(50, 10, 200, 20);
 		
 		this.txtPregunta = new JTextArea();
 		this.txtPregunta.setBounds(20, 20, 460, 120);
@@ -78,6 +83,7 @@ public class PanelPreguntas extends JPanel {
 		this.btnSalir = new JButton("Salir");
 		this.btnSalir.setBounds(850, 10, 100, 20);
 		
+		this.add(this.lblEvaluador);
 		this.add(this.panelEscribirPregunta);
 		this.add(this.panelPreguntas);
 		this.add(this.panelAspirantes);
@@ -187,6 +193,14 @@ public class PanelPreguntas extends JPanel {
 
 	public void setPanelAspirantes(JPanel panelAspirantes) {
 		this.panelAspirantes = panelAspirantes;
+	}
+
+	public JLabel getLblEvaluador() {
+		return lblEvaluador;
+	}
+
+	public void setLblEvaluador(JLabel lblEvaluador) {
+		this.lblEvaluador = lblEvaluador;
 	}
 	
 	

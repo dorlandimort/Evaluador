@@ -1,5 +1,6 @@
-package mx.edu.ulsaoaxaca.evaluador.modelo;
+package mx.edu.ulsaoaxaca.evaluador.mvc.modelo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Aspirante {
@@ -11,6 +12,10 @@ public class Aspirante {
 	private String puesto;
 	
 	private List<Pregunta> preguntas;
+	
+	public Aspirante() {
+		this.preguntas = new LinkedList<>();
+	}
 
 	public int getId() {
 		return id;
