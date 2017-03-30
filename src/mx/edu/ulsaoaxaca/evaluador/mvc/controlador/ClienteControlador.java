@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 
 import javax.swing.JOptionPane;
 
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaAspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaRegistro;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ServidorRMI;
@@ -26,9 +27,27 @@ public class ClienteControlador {
 	
 	public void init() {
 		this.ventanaRegistro.getBtnIngresar().addActionListener(e -> {
+			/**
+			 * Tenemos que validar que los campos no estan vacios
+			 * Si no estan vacios creamos un Aspirante
+			 */
 			this.iniciarRMI();
 			String evaluador;
 			try {
+				
+				/**
+				 * Poner las propiedades al aspirante
+				 */
+				Aspirante aspirante = new Aspirante();
+				
+				/**
+				 * mandar a llamar al metodo remoto para guardar un aspirante
+				 */
+				//aspirante = this.server.registrarAspirante(aspirante);
+				/**
+				 * Si el aspirante retornado es null o su id es -1 no se guardó
+				 * Entonces debemos tirar un error
+				 */
 				evaluador = this.server.obtenerEvaluador();
 				this.mostrarVentanaClientePrincipal();
 				this.ventanaAspirante.getPanelRespuestas().getLblEvaluador().setText(evaluador);
@@ -72,7 +91,7 @@ public class ClienteControlador {
 	}
 	
 	private void iniciarRMI() {
-		String host = "192.168.1.101";
+		String host = "172.16.12.148";
         try {
         	
             Registry registry = LocateRegistry.getRegistry(host, 1099);

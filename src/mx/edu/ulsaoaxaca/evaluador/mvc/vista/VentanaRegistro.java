@@ -55,7 +55,7 @@ public class VentanaRegistro extends JFrame {
 		this.txtPuesto = new JTextField();
 		this.txtPuesto.setBounds(130, 95, 400, 20);
 		
-		this.lblEscolaridad = new JLabel("Fecha");
+		this.lblEscolaridad = new JLabel("Escolaridad");
 		this.lblEscolaridad.setBounds(20, 120, 100, 20);
 		
 		this.txtEscolaridad = new JTextField();
