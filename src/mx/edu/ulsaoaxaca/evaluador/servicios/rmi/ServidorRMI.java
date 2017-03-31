@@ -8,6 +8,7 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 public interface ServidorRMI extends Remote {
 	
 	public Aspirante registrarAspirante(Aspirante aspirante) throws RemoteException;
+	public void registrarCliente(ClienteRMI cliente) throws RemoteException;
 	public String obtenerEvaluador() throws RemoteException;
 
 }

@@ -1,9 +1,11 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
+import java.io.Serializable;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-public class VentanaAspirante extends JFrame {
+public class VentanaAspirante extends JFrame implements Serializable {
 	
 	private JTabbedPane panelPestañas;
 	

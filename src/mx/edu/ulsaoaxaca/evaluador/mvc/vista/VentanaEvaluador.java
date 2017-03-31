@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
+
 public class VentanaEvaluador extends JFrame {
 	
 	private JTabbedPane panelPestañas;
@@ -21,8 +23,6 @@ public class VentanaEvaluador extends JFrame {
 		
 		this.panelBitacora = new PanelBitacora();
 		this.panelReporte = new PanelReporte();
-		
-		
 	}
 	
 	public void addTabs() {
@@ -35,6 +35,12 @@ public class VentanaEvaluador extends JFrame {
 		
 		this.add(panelPestañas);
 	}
+	
+	public void agregarCliente(ClienteRMI cliente) {
+		
+	}
+	
+	// getters y setters
 
 	public JTabbedPane getPanelPestañas() {
 		return panelPestañas;

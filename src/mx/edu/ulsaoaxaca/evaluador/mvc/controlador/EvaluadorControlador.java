@@ -1,8 +1,12 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Sesion;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelEvaluacion;
@@ -10,12 +14,15 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelPreguntas;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaEvaluador;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAO;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAOImpl;
+import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class EvaluadorControlador {
 	
 	private VentanaEvaluador ventanaEvaluador;
 	private AspiranteDAO dao;
 	private Sesion sesionActual;
+	
+	private Map<Integer, ClienteRMI> clientesConectados;
 	
 	private String[] titulos = {"No.", "Pregunta", "Respuesta", "Aspirante", "Correcto", "Enviar"};
 	
@@ -26,8 +33,8 @@ public class EvaluadorControlador {
 	public void init() {
 		
 		this.dao = AspiranteDAOImpl.getInstance();
-		
 		this.ventanaEvaluador = new VentanaEvaluador();
+		this.clientesConectados = new HashMap<>();
 		
 		Object data[][] = {
 				{new Integer(1), "¿Qué te gusta hacer?", "Programar", "Alondra Soledad", new Boolean(true), new Boolean(false)},
@@ -40,6 +47,12 @@ public class EvaluadorControlador {
 		this.ventanaEvaluador.getPanelPreguntas().getBtnSalir().addActionListener(e -> {
 			this.cerrarVentanaEvaluador();
 		});
+		
+		// Listener para la lista de aspirantes
+		this.ventanaEvaluador.getPanelPreguntas().getListaAspirantes().addListSelectionListener(e -> {
+			System.out.println(this.ventanaEvaluador.getPanelPreguntas().getListaAspirantes().getSelectedValue());
+		});
+		
 		this.mostrarVentanaEvaluador();
 		
 		String nombre = JOptionPane.showInputDialog(this.ventanaEvaluador, "Ingrese su nombre");
@@ -74,7 +87,21 @@ public class EvaluadorControlador {
 	public void mostrarMensajeDeError(Component parent, String mensaje) {
 		JOptionPane.showMessageDialog(parent, mensaje, "Ha ocurrido un error", JOptionPane.OK_OPTION);
 	}
+	
+	public void agregarCliente(int id, ClienteRMI cliente) {
+		
+		this.clientesConectados.put(id, cliente);
+		this.ventanaEvaluador.getPanelPreguntas().getListModel().addElement(cliente);
+		this.mostrarMensaje("Se ha conectado un nuevo aspirante");
+	}
+	
+	public void mostrarMensaje(String mensaje) {
+		JOptionPane.showMessageDialog(this.ventanaEvaluador, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 
+	// Setters y getters
+	
 	public VentanaEvaluador getVentanaEvaluador() {
 		return ventanaEvaluador;
 	}

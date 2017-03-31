@@ -49,13 +49,14 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 	@Override
 	public Aspirante registrarAspirante(Aspirante aspirante) {
 		try {
-			String sql = "INSERT INTO aspirante (nombre, edad, escolaridad, puesto) VALUES "
-					+ "(?, ?, ?, ?)";
+			String sql = "INSERT INTO aspirante (nombre, edad, escolaridad, puesto, sesion_id) VALUES "
+					+ "(?, ?, ?, ?, ?)";
 			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, aspirante.getNombre());
 			st.setInt(2,  aspirante.getEdad());
 			st.setString(3, aspirante.getEscolaridad());
 			st.setString(4, aspirante.getPuesto());
+			st.setInt(5, aspirante.getSesion().getId());
 			
 			int id = st.executeUpdate();
 			if (id != -1)

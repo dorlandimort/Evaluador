@@ -1,13 +1,20 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
+import java.awt.Dimension;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import mx.edu.ulsaoaxaca.evaluador.misc.ListaClientesCellRenderer;
+import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class PanelPreguntas extends JPanel {
 	
@@ -19,7 +26,9 @@ public class PanelPreguntas extends JPanel {
 	private JTextArea txtPregunta;
 	
 	private JList listaPreguntas;
-	private JList listaAspirantes;
+	
+	private JList<ClienteRMI> listaAspirantes;
+	private DefaultListModel<ClienteRMI> listModel;
 	
 	private JButton btnAgregarPregunta;
 	private JButton btnEnviarPregunta;
@@ -29,6 +38,8 @@ public class PanelPreguntas extends JPanel {
 	private JPanel panelEscribirPregunta;
 	private JPanel panelPreguntas;
 	private JPanel panelAspirantes;
+	
+	
 	
 	public PanelPreguntas() {
 		this.setLayout(null);
@@ -77,8 +88,17 @@ public class PanelPreguntas extends JPanel {
 		
 		this.panelAspirantes = new JPanel();
 		this.panelAspirantes.setBounds(570, 50, 300, 450);
-		this.panelAspirantes.setLayout(null);
 		this.panelAspirantes.setBorder(this.bordeAspirantes);
+		
+		// crear la lista de aspirantes
+		
+		this.listModel = new DefaultListModel<>();
+		this.listaAspirantes = new JList<>(this.listModel);
+		this.listaAspirantes.setBounds(10, 20, 250, 400);
+		this.listaAspirantes.setCellRenderer(new ListaClientesCellRenderer());
+		JScrollPane scroll = new JScrollPane(this.listaAspirantes);
+		scroll.setPreferredSize(new Dimension(250, 400));
+		this.panelAspirantes.add(scroll);
 		
 		this.btnSalir = new JButton("Salir");
 		this.btnSalir.setBounds(850, 10, 100, 20);
@@ -129,14 +149,6 @@ public class PanelPreguntas extends JPanel {
 
 	public void setListaPreguntas(JList listaPreguntas) {
 		this.listaPreguntas = listaPreguntas;
-	}
-
-	public JList getListaAspirantes() {
-		return listaAspirantes;
-	}
-
-	public void setListaAspirantes(JList listaAspirantes) {
-		this.listaAspirantes = listaAspirantes;
 	}
 
 	public JButton getBtnAgregarPregunta() {
@@ -201,6 +213,22 @@ public class PanelPreguntas extends JPanel {
 
 	public void setLblEvaluador(JLabel lblEvaluador) {
 		this.lblEvaluador = lblEvaluador;
+	}
+
+	public DefaultListModel<ClienteRMI> getListModel() {
+		return listModel;
+	}
+
+	public void setListModel(DefaultListModel<ClienteRMI> listModel) {
+		this.listModel = listModel;
+	}
+
+	public void setListaAspirantes(JList<ClienteRMI> listaAspirantes) {
+		this.listaAspirantes = listaAspirantes;
+	}
+
+	public JList<ClienteRMI> getListaAspirantes() {
+		return listaAspirantes;
 	}
 	
 	

@@ -1,5 +1,11 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -10,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class VentanaRegistro extends JFrame {
+public class VentanaRegistro extends JFrame implements Serializable {
 	
 	private JLabel lblNombre;
 	private JLabel lblPuesto;
@@ -65,7 +71,11 @@ public class VentanaRegistro extends JFrame {
 		this.lblFecha.setBounds(540, 70, 100, 20);
 		
 		this.txtFecha = new JTextField();
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Date ahora = Calendar.getInstance().getTime();
+		this.txtFecha.setText(df.format(ahora));
 		this.txtFecha.setBounds(650, 70, 100, 20);
+		this.txtFecha.setEditable(false);
 		
 		this.lblEdad = new JLabel("Edad");
 		this.lblEdad.setBounds(540, 95, 100, 20);
@@ -97,6 +107,7 @@ public class VentanaRegistro extends JFrame {
 		
 		this.txtIp = new JTextField();
 		this.txtIp.setBounds(130, 20, 400, 20);
+		this.txtIp.setText("127.0.0.1");
 		
 		this.btnIngresar = new JButton("Ingresar");
 		this.btnIngresar.setBounds(520, 100, 100, 20);
@@ -209,6 +220,30 @@ public class VentanaRegistro extends JFrame {
 
 	public void setBtnSalir(JButton btnSalir) {
 		this.btnSalir = btnSalir;
+	}
+
+	public JLabel getLblIp() {
+		return lblIp;
+	}
+
+	public void setLblIp(JLabel lblIp) {
+		this.lblIp = lblIp;
+	}
+
+	public JTextField getTxtIp() {
+		return txtIp;
+	}
+
+	public void setTxtIp(JTextField txtIp) {
+		this.txtIp = txtIp;
+	}
+
+	public Integer[] getEdades() {
+		return edades;
+	}
+
+	public void setEdades(Integer[] edades) {
+		this.edades = edades;
 	}
 
 	

@@ -1,8 +1,9 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Pregunta {
+public class Pregunta implements Serializable {
 	
 	private int id;
 	private String pregunta;

@@ -1,9 +1,10 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.modelo;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Aspirante {
+public class Aspirante implements Serializable {
 	
 	private int id;
 	private String nombre;
@@ -11,6 +12,7 @@ public class Aspirante {
 	private String escolaridad;
 	private String puesto;
 	
+	private Sesion sesion;
 	private List<Pregunta> preguntas;
 	
 	public Aspirante() {
@@ -63,6 +65,14 @@ public class Aspirante {
 
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
+	}
+
+	public Sesion getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(Sesion sesion) {
+		this.sesion = sesion;
 	}
 	
 	

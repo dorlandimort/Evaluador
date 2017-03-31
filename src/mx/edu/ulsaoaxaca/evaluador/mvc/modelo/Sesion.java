@@ -1,9 +1,10 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Sesion {
+public class Sesion implements Serializable {
 	
 	private int id;
 	private Date fecha;
