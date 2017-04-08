@@ -95,7 +95,7 @@ public class PanelPreguntas extends JPanel {
 		this.listModel = new DefaultListModel<>();
 		this.listaAspirantes = new JList<>(this.listModel);
 		this.listaAspirantes.setBounds(10, 20, 250, 400);
-		this.listaAspirantes.setCellRenderer(new ListaClientesCellRenderer());
+		//this.listaAspirantes.setCellRenderer(new ListaClientesCellRenderer());
 		JScrollPane scroll = new JScrollPane(this.listaAspirantes);
 		scroll.setPreferredSize(new Dimension(250, 400));
 		this.panelAspirantes.add(scroll);

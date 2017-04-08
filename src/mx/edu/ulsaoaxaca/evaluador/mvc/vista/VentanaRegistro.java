@@ -71,10 +71,10 @@ public class VentanaRegistro extends JFrame implements Serializable {
 		this.lblFecha.setBounds(540, 70, 100, 20);
 		
 		this.txtFecha = new JTextField();
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("EEEE dd/MMMM/yyyy HH:mm:ss");
 		Date ahora = Calendar.getInstance().getTime();
 		this.txtFecha.setText(df.format(ahora));
-		this.txtFecha.setBounds(650, 70, 100, 20);
+		this.txtFecha.setBounds(650, 70, 150, 20);
 		this.txtFecha.setEditable(false);
 		
 		this.lblEdad = new JLabel("Edad");
