@@ -41,10 +41,9 @@ public class ClienteControlador implements Serializable {
 			 * Tenemos que validar que los campos no estan vacios
 			 * Si no estan vacios creamos un Aspirante
 			 */
-			
 			if (validarCampos()) {
 				String ip = this.ventanaRegistro.getTxtIp().getText();
-				
+				System.out.println(ip);
 				try {
 					
 					/**
