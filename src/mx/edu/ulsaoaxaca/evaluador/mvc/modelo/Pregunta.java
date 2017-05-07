@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class Pregunta implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3859746295320702919L;
 	private int id;
 	private String pregunta;
 	private String respuesta;
@@ -12,7 +16,17 @@ public class Pregunta implements Serializable {
 	private Date fecha;
 	
 	public Pregunta() {
+		this("");
+	}
+	
+	public Pregunta(String pregunta) {
 		this.fecha = new Date();
+		this.correcta = false;
+		this.pregunta = pregunta;
+	}
+	
+	public String toString() {
+		return this.pregunta;
 	}
 	
 	public int getId() {
@@ -45,7 +59,6 @@ public class Pregunta implements Serializable {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
 	
 
 }

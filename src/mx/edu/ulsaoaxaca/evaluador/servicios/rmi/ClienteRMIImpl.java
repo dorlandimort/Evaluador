@@ -4,34 +4,51 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JOptionPane;
 
 import mx.edu.ulsaoaxaca.evaluador.mvc.controlador.ClienteControlador;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 
 public class ClienteRMIImpl implements ClienteRMI, Serializable {
 	
-	ClienteControlador controlador;
-	Aspirante aspirante;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1423982717920875048L;
+	private ClienteControlador controlador;
+	private Aspirante aspirante;
+	private ServidorRMI server;
 	
 	public ClienteRMIImpl(String host, int port, ClienteControlador c, Aspirante a) {
 		this.controlador = c;
 		this.aspirante = a;
 		try {
+			UnicastRemoteObject.exportObject(this, 0);
             Registry registry = LocateRegistry.getRegistry(host, port);
             ServidorRMI server = (ServidorRMI) registry.lookup("ServidorEvaluador");
-           this.controlador.setServer(server);
+           this.server = server;
+           server.registrarCliente(this);
         } catch (Exception e) {
         	JOptionPane.showMessageDialog(null, "Error de conexión al servidor");
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
 	}
+	
 
 	@Override
-	public void enviarMensajeCliente(String mensaje) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void recibirPregunta(Pregunta pregunta) throws RemoteException {
+		this.controlador.mostrarMensaje("Se ha agregado una nueva pregunta a su lista de preguntas pendientes");
+		this.controlador.agregarPregunta(pregunta);
+		
+	}
+	
+	@Override
+	public void enviarRespuesta(Pregunta pregunta) throws RemoteException {
+		this.server.recibirRespuesta(this, pregunta);
 		
 	}
 
@@ -54,6 +71,28 @@ public class ClienteRMIImpl implements ClienteRMI, Serializable {
 	public String toString() {
 		return this.aspirante.getNombre();
 	}
+
+
+	@Override
+	public Aspirante registrarAspirante(Aspirante aspirante) throws RemoteException {
+		this.aspirante = server.registrarAspirante(aspirante);
+		return this.aspirante;
+		
+	}
+
+
+	@Override
+	public String obtenerEvaluador() throws RemoteException {
+		return server.obtenerEvaluador();
+	}
+
+
+	@Override
+	public void registrarCliente(ClienteRMI cliente) throws RemoteException {
+		server.registrarCliente(this);
+		
+	}
+	
 	
 
 }

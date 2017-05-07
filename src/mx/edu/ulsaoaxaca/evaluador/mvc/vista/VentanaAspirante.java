@@ -7,6 +7,11 @@ import javax.swing.JTabbedPane;
 
 public class VentanaAspirante extends JFrame implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8268929114607318521L;
+
 	private JTabbedPane panelPestañas;
 	
 	private PanelRespuestasCliente panelRespuestas;

@@ -13,11 +13,17 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
 import mx.edu.ulsaoaxaca.evaluador.misc.ListaClientesCellRenderer;
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class PanelPreguntas extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1001812524611473507L;
 	private TitledBorder bordeEscribirPregunta;
 	private TitledBorder bordePreguntas;
 	private TitledBorder bordeAspirantes;
@@ -25,10 +31,11 @@ public class PanelPreguntas extends JPanel {
 	private JLabel lblEvaluador;
 	private JTextArea txtPregunta;
 	
-	private JList listaPreguntas;
+	private JList<Pregunta> preguntasEnviadas;
+	DefaultListModel<Pregunta> preguntasEnviadasModelo;
 	
-	private JList<ClienteRMI> listaAspirantes;
-	private DefaultListModel<ClienteRMI> listModel;
+	private JList<ClienteListModel> listaAspirantes;
+	private DefaultListModel<ClienteListModel> listModel;
 	
 	private JButton btnAgregarPregunta;
 	private JButton btnEnviarPregunta;
@@ -46,7 +53,7 @@ public class PanelPreguntas extends JPanel {
 		
 		this.bordeAspirantes = new TitledBorder("Aspirantes conectados");
 		this.bordeEscribirPregunta = new TitledBorder("Escribir Pregunta");
-		this.bordePreguntas = new TitledBorder("Preguntas");
+		this.bordePreguntas = new TitledBorder("Preguntas enviadas");
 		
 		this.panelEscribirPregunta = new JPanel();
 		this.panelEscribirPregunta.setBounds(50, 50, 500, 200);
@@ -59,7 +66,7 @@ public class PanelPreguntas extends JPanel {
 		this.txtPregunta = new JTextArea();
 		this.txtPregunta.setBounds(20, 20, 460, 120);
 		
-		this.btnAgregarPregunta = new JButton("Agregar");
+		this.btnAgregarPregunta = new JButton("Enviar");
 		this.btnAgregarPregunta.setBounds(350, 160, 100, 20);
 		
 		this.panelEscribirPregunta.add(this.txtPregunta);
@@ -72,9 +79,10 @@ public class PanelPreguntas extends JPanel {
 		this.panelPreguntas.setLayout(null);
 		
 		String[] preguntas = {"Pregunta 1", "Pregunta2", "Pregunta3" };
-		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(preguntas);
-		this.listaPreguntas = new JList(modelo);
-		this.listaPreguntas.setBounds(20, 20, 470, 100);
+		
+		preguntasEnviadasModelo = new DefaultListModel<>();
+		this.preguntasEnviadas = new JList<>(preguntasEnviadasModelo);
+		this.preguntasEnviadas.setBounds(20, 20, 470, 100);
 		
 		this.btnEnviarPregunta = new JButton("Enviar");
 		this.btnEnviarPregunta.setBounds(200, 140, 100, 20);
@@ -82,7 +90,7 @@ public class PanelPreguntas extends JPanel {
 		this.btnEliminarPregunta = new JButton("Eliminar");
 		this.btnEliminarPregunta.setBounds(310, 140, 100, 20);
 		
-		this.panelPreguntas.add(this.listaPreguntas);
+		this.panelPreguntas.add(this.preguntasEnviadas);
 		this.panelPreguntas.add(this.btnEnviarPregunta);
 		this.panelPreguntas.add(this.btnEliminarPregunta);
 		
@@ -95,7 +103,6 @@ public class PanelPreguntas extends JPanel {
 		this.listModel = new DefaultListModel<>();
 		this.listaAspirantes = new JList<>(this.listModel);
 		this.listaAspirantes.setBounds(10, 20, 250, 400);
-		//this.listaAspirantes.setCellRenderer(new ListaClientesCellRenderer());
 		JScrollPane scroll = new JScrollPane(this.listaAspirantes);
 		scroll.setPreferredSize(new Dimension(250, 400));
 		this.panelAspirantes.add(scroll);
@@ -143,13 +150,7 @@ public class PanelPreguntas extends JPanel {
 		this.txtPregunta = txtPregunta;
 	}
 
-	public JList getListaPreguntas() {
-		return listaPreguntas;
-	}
 
-	public void setListaPreguntas(JList listaPreguntas) {
-		this.listaPreguntas = listaPreguntas;
-	}
 
 	public JButton getBtnAgregarPregunta() {
 		return btnAgregarPregunta;
@@ -215,20 +216,36 @@ public class PanelPreguntas extends JPanel {
 		this.lblEvaluador = lblEvaluador;
 	}
 
-	public DefaultListModel<ClienteRMI> getListModel() {
+	public DefaultListModel<ClienteListModel> getListModel() {
 		return listModel;
 	}
 
-	public void setListModel(DefaultListModel<ClienteRMI> listModel) {
+	public void setListModel(DefaultListModel<ClienteListModel> listModel) {
 		this.listModel = listModel;
 	}
 
-	public void setListaAspirantes(JList<ClienteRMI> listaAspirantes) {
+	public void setListaAspirantes(JList<ClienteListModel> listaAspirantes) {
 		this.listaAspirantes = listaAspirantes;
 	}
 
-	public JList<ClienteRMI> getListaAspirantes() {
+	public JList<ClienteListModel> getListaAspirantes() {
 		return listaAspirantes;
+	}
+
+	public JList<Pregunta> getPreguntasEnviadas() {
+		return preguntasEnviadas;
+	}
+
+	public void setPreguntasEnviadas(JList<Pregunta> preguntasEnviadas) {
+		this.preguntasEnviadas = preguntasEnviadas;
+	}
+
+	public DefaultListModel<Pregunta> getPreguntasEnviadasModelo() {
+		return preguntasEnviadasModelo;
+	}
+
+	public void setPreguntasEnviadasModelo(DefaultListModel<Pregunta> preguntasEnviadasModelo) {
+		this.preguntasEnviadasModelo = preguntasEnviadasModelo;
 	}
 	
 	

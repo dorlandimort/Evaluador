@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
+import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Sesion;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelEvaluacion;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelPreguntas;
@@ -15,23 +15,28 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaEvaluador;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAO;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAOImpl;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
+import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ServidorRMI;
+
+import java.rmi.RemoteException;
 
 public class EvaluadorControlador {
 	
 	private VentanaEvaluador ventanaEvaluador;
 	private AspiranteDAO dao;
 	private Sesion sesionActual;
+	private ClienteListModel clienteSeleccionado;
+	private ServidorRMI server;
 	
-	private Map<Integer, ClienteRMI> clientesConectados;
+	private Map<Integer, ClienteListModel> clientesConectados;
 	
 	private String[] titulos = {"No.", "Pregunta", "Respuesta", "Aspirante", "Correcto", "Enviar"};
 	
 	public EvaluadorControlador() {
 		this.init();
+		
 	}
 	
 	public void init() {
-		
 		this.dao = AspiranteDAOImpl.getInstance();
 		this.ventanaEvaluador = new VentanaEvaluador();
 		this.clientesConectados = new HashMap<>();
@@ -49,8 +54,29 @@ public class EvaluadorControlador {
 		});
 		
 		// Listener para la lista de aspirantes
-		this.ventanaEvaluador.getPanelPreguntas().getListaAspirantes().addListSelectionListener(e -> {
-			System.out.println(this.ventanaEvaluador.getPanelPreguntas().getListaAspirantes().getSelectedValue());
+		this.ventanaEvaluador.listaClientes().addListSelectionListener(e -> {
+			ClienteListModel cliente = (ClienteListModel) this.ventanaEvaluador.listaClientes().getSelectedValue();
+			System.out.println(cliente);
+			this.clienteSeleccionado = cliente;
+		});
+		
+		// Listener para boton de enviar pregunta
+		
+		this.ventanaEvaluador.botonEnviarPregunta().addActionListener(e -> {
+			if (this.clienteSeleccionado != null) {
+				String pregunta = this.ventanaEvaluador.textoPregunta();
+				if (pregunta.isEmpty()) {
+					this.mostrarMensajeDeError(this.ventanaEvaluador, "El campo de progunta no puede estar vacío");
+				} else {
+					try {
+						server.enviarPregunta(this.clienteSeleccionado.getCliente(), pregunta);
+						this.ventanaEvaluador.getPanelPreguntas().getTxtPregunta().setText("");
+					} catch (RemoteException ex) {
+						this.mostrarMensajeDeError(this.ventanaEvaluador, "Error de conexión con el cliente");
+					}
+				}
+			} else
+				this.mostrarMensajeDeError(this.ventanaEvaluador, "Seleccione un aspirante antes de enviar una pregunta");
 		});
 		
 		this.mostrarVentanaEvaluador();
@@ -88,15 +114,25 @@ public class EvaluadorControlador {
 		JOptionPane.showMessageDialog(parent, mensaje, "Ha ocurrido un error", JOptionPane.OK_OPTION);
 	}
 	
-	public void agregarCliente(int id, ClienteRMI cliente) {
-		
-		this.clientesConectados.put(id, cliente);
+	public void agregarCliente(ClienteListModel cliente) {
+		this.clientesConectados.put(cliente.getId(), cliente);
 		this.ventanaEvaluador.getPanelPreguntas().getListModel().addElement(cliente);
 		this.mostrarMensaje("Se ha conectado un nuevo aspirante");
 	}
 	
 	public void mostrarMensaje(String mensaje) {
-		JOptionPane.showMessageDialog(this.ventanaEvaluador, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+		Thread t = new Thread(new Runnable(){
+	        public void run(){
+	        	JOptionPane.showMessageDialog(ventanaEvaluador, 
+	        			mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+	        }
+	    });
+	  t.start();
+		
+	}
+	
+	public void agregarPregunta(Pregunta pregunta) {
+		this.ventanaEvaluador.getPanelPreguntas().getPreguntasEnviadasModelo().addElement(pregunta);
 	}
 	
 
@@ -132,6 +168,30 @@ public class EvaluadorControlador {
 
 	public void setTitulos(String[] titulos) {
 		this.titulos = titulos;
+	}
+
+	public ClienteListModel getClienteSeleccionado() {
+		return clienteSeleccionado;
+	}
+
+	public void setClienteSeleccionado(ClienteListModel clienteSeleccionado) {
+		this.clienteSeleccionado = clienteSeleccionado;
+	}
+
+	public Map<Integer, ClienteListModel> getClientesConectados() {
+		return clientesConectados;
+	}
+
+	public void setClientesConectados(Map<Integer, ClienteListModel> clientesConectados) {
+		this.clientesConectados = clientesConectados;
+	}
+
+	public ServidorRMI getServer() {
+		return server;
+	}
+
+	public void setServer(ServidorRMI server) {
+		this.server = server;
 	}
 	
 	

@@ -2,34 +2,32 @@ package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
 import javax.swing.JOptionPane;
-
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaAspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaRegistro;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMIImpl;
-import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ServidorRMI;
 
 public class ClienteControlador implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3550497967787488932L;
 	private VentanaRegistro ventanaRegistro;
 	private VentanaAspirante ventanaAspirante;
-	
-	private ServidorRMI server;
 	private ClienteRMI clienteRMI;
-	
 	private String nombre;
 	private String puesto;
 	private String escolaridad;
 	private String ip;
 	private int edad;
 	
+	private Pregunta preguntaSeleccionada;
+	
 	public ClienteControlador() {
-		this.server = server;
 		this.ventanaRegistro = new VentanaRegistro();
 		this.mostrarVentanaRegistro();
 		this.init();
@@ -62,7 +60,7 @@ public class ClienteControlador implements Serializable {
 					/**
 					 * mandar a llamar al metodo remoto para guardar un aspirante
 					 */
-					aspirante = this.server.registrarAspirante(aspirante);
+					aspirante = this.clienteRMI.registrarAspirante(aspirante);
 					/**
 					 * Si el aspirante retornado es null o su id es -1 no se guardó
 					 * Entonces debemos tirar un error
@@ -70,8 +68,7 @@ public class ClienteControlador implements Serializable {
 					if (aspirante == null || aspirante.getId() == -1) {
 						this.mostrarError("Error al intentar registrar, intente nuevamente o verifique sus datos.");
 					} else {
-						this.server.registrarCliente(this.clienteRMI);
-						evaluador = this.server.obtenerEvaluador();
+						evaluador = this.clienteRMI.obtenerEvaluador();
 						this.mostrarVentanaClientePrincipal();
 						this.ventanaAspirante.getPanelRespuestas().getLblEvaluador().setText(evaluador);
 					}
@@ -87,6 +84,7 @@ public class ClienteControlador implements Serializable {
 			this.ventanaRegistro.dispose();
 			
 		});
+		
 	}
 	
 	public void mostrarVentanaRegistro() {
@@ -99,13 +97,41 @@ public class ClienteControlador implements Serializable {
 	
 	public void mostrarVentanaClientePrincipal() {
 		this.ventanaAspirante = new VentanaAspirante();
-		
 		this.ventanaAspirante.getPanelRespuestas().getBtnSalir().addActionListener(e -> {
 			int salir = JOptionPane.showConfirmDialog(this.ventanaAspirante, "Todo su progreso se perderá!", "Está seguro que desea salir?", JOptionPane.YES_NO_OPTION);
 			if (salir == JOptionPane.YES_NO_OPTION) {
 				this.mostrarVentanaRegistro();
 				this.cerrarVentanaClientePrincipal();
 			}
+		});
+		
+		this.ventanaAspirante.getPanelRespuestas().getPanelPreguntasCliente().getPreguntasLista().addListSelectionListener(e -> {
+			this.preguntaSeleccionada = (Pregunta)
+					this.ventanaAspirante.getPanelRespuestas().getPanelPreguntasCliente().getPreguntasLista().getSelectedValue();
+		});
+		
+		this.ventanaAspirante.getPanelRespuestas().getBtnEnviarRespuesta().addActionListener(e -> {
+			if (this.preguntaSeleccionada != null) {
+				int index = 
+						this.ventanaAspirante.getPanelRespuestas().getPanelPreguntasCliente().getPreguntasLista().getSelectedIndex();
+				String respuesta = this.ventanaAspirante.getPanelRespuestas().getTxtRespuesta().getText();
+				if (! respuesta.isEmpty()) {
+					try {
+						this.preguntaSeleccionada.setRespuesta(respuesta);
+						this.clienteRMI.enviarRespuesta(this.preguntaSeleccionada);
+						this.ventanaAspirante.getPanelRespuestas().getPanelPreguntasCliente().getPreguntasModelo().removeElementAt(index);
+						this.ventanaAspirante.getPanelRespuestas().getTxtRespuesta().setText("");
+					} catch (RemoteException e1) {
+						this.mostrarError("Error de conexión al servidor");
+						e1.printStackTrace();
+					}
+				} else {
+					this.mostrarError("La respuesta no debe estar vacía");
+				}
+					
+			} else
+				this.mostrarError("Seleccione una pregunta a responder");
+			
 		});
 		this.ventanaAspirante.setVisible(true);
 		this.cerrarVentanaRegistro();
@@ -140,6 +166,20 @@ public class ClienteControlador implements Serializable {
 		JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	public void mostrarMensaje(String mensaje) {
+		 Thread t = new Thread(new Runnable(){
+		        public void run(){
+		        	JOptionPane.showMessageDialog(ventanaAspirante, mensaje, 
+		        			"Pregunta", JOptionPane.INFORMATION_MESSAGE);
+		        }
+		    });
+		  t.start();
+	}
+	
+	public void agregarPregunta(Pregunta pregunta) {
+		this.ventanaAspirante.getPanelRespuestas().getPanelPreguntasCliente().getPreguntasModelo().addElement(pregunta);
+	}
+	
 	
 	/**
 	 * Getters y Setters
@@ -161,15 +201,5 @@ public class ClienteControlador implements Serializable {
 	public void setVentanaAspirante(VentanaAspirante ventanaAspirante) {
 		this.ventanaAspirante = ventanaAspirante;
 	}
-
-	public ServidorRMI getServer() {
-		return server;
-	}
-
-	public void setServer(ServidorRMI server) {
-		this.server = server;
-	}
-	
-	
 
 }

@@ -1,10 +1,13 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class VentanaEvaluador extends JFrame {
@@ -38,6 +41,23 @@ public class VentanaEvaluador extends JFrame {
 	
 	public void agregarCliente(ClienteRMI cliente) {
 		
+	}
+	
+	/**
+	 * Métodos proxy
+	 * 
+	 */
+	
+	public JButton botonEnviarPregunta() {
+		return this.panelPreguntas.getBtnAgregarPregunta();
+	}
+	
+	public JList<ClienteListModel> listaClientes() {
+		return this.panelPreguntas.getListaAspirantes();
+	}
+	
+	public String textoPregunta() {
+		return this.panelPreguntas.getTxtPregunta().getText();
 	}
 	
 	// getters y setters

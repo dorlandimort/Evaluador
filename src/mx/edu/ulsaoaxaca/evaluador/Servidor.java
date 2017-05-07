@@ -21,6 +21,7 @@ public class Servidor {
 			EvaluadorControlador controlador = new EvaluadorControlador();
 			ServidorRMI obj = new ServidorRMIImpl(controlador);
 			ServidorRMI server = (ServidorRMI) UnicastRemoteObject.exportObject(obj, 0);
+			controlador.setServer(server);
 			Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("ServidorEvaluador", server);
             

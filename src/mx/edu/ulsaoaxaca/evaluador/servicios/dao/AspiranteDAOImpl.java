@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.SortingFocusTraversalPolicy;
+
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Sesion;
@@ -36,7 +38,12 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setObject(1, sesion.getFecha(), java.sql.Types.DATE);
 			st.setString(2, sesion.getEvaluador());
-			int id = st.executeUpdate();
+			st.executeUpdate();
+			int id = -1;
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				id = rs.getInt(1);
+			}
 			if (id != -1)
 				sesion.setId(id);
 		} catch (SQLException e) {
@@ -50,7 +57,7 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 	public Aspirante registrarAspirante(Aspirante aspirante) {
 		try {
 			String sql = "INSERT INTO aspirante (nombre, edad, escolaridad, puesto, sesion_id) VALUES "
-					+ "(?, ?, ?, ?, ?)";
+					+ "(?, ?, ?, ?, ?);";
 			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, aspirante.getNombre());
 			st.setInt(2,  aspirante.getEdad());
@@ -58,11 +65,19 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 			st.setString(4, aspirante.getPuesto());
 			st.setInt(5, aspirante.getSesion().getId());
 			
-			int id = st.executeUpdate();
+			st.executeUpdate();
+			
+			int id = -1;
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				id = rs.getInt(1);
+				System.out.println("Id:" + id);
+			}
 			if (id != -1)
 				aspirante.setId(id);
 			
 		} catch (SQLException e) {
+			System.out.println("Error de base de datos");
 			aspirante = null;
 			e.printStackTrace();
 		}
@@ -125,14 +140,43 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 	
 	@Override
 	public Pregunta agregarPregunta(Aspirante aspirante, Pregunta pregunta) {
-		
-		return null;
+		String sql = "INSERT INTO pregunta (pregunta, fecha, Aspirante_id) values (?, ?, ?);";
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setObject(1, pregunta.getPregunta());
+			st.setObject(2, pregunta.getFecha(), java.sql.Types.DATE);
+			st.setInt(3,  aspirante.getId());
+			st.executeUpdate();
+			int id = -1;
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				id = rs.getInt(1);
+			}
+			if (id != -1) {
+				pregunta.setId(id);
+				aspirante.getPreguntas().add(pregunta);
+			}
+				
+		} catch (SQLException e) {
+			pregunta = null;
+			e.printStackTrace();
+		}
+		return pregunta;
 	}
 
 	@Override
 	public Pregunta actualizarPregunta(Pregunta pregunta) {
-		
-		return null;
+		String sql = "UPDATE pregunta set respuesta = ? where id = ?;";
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, pregunta.getRespuesta());
+			st.setInt(2, pregunta.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			pregunta = null;
+			e.printStackTrace();
+		}
+		return pregunta;
 	}
 
 }
