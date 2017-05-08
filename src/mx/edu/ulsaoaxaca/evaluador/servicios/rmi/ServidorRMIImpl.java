@@ -66,7 +66,7 @@ public class ServidorRMIImpl implements ServidorRMI, Serializable {
 	public void recibirRespuesta(ClienteRMI cliente, Pregunta pregunta) throws RemoteException {
 		this.dao.actualizarPregunta(pregunta);
 		this.controlador.mostrarMensaje(cliente.getAspirante().getNombre() + " contestó: " + pregunta.getRespuesta());
-		
+		this.controlador.actualizarPreguntasEvaluacion();
 	}
 
 }

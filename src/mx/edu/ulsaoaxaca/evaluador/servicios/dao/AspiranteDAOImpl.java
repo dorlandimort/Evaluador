@@ -110,8 +110,8 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 		return aspirante;
 	}
 	
-	private List<Pregunta> obtenerPreguntas(Aspirante aspirante) {
-		List<Pregunta> preguntas = null;
+	public List<Pregunta> obtenerPreguntas(Aspirante aspirante) {
+		List<Pregunta> preguntas = new LinkedList<>();
 		String sql = "SELECT id, pregunta, respuesta, correcta, fecha FROM pregunta "
 				+ "WHERE aspirante_id = ?";
 		try {
@@ -119,7 +119,6 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 			st.setInt(1, aspirante.getId());
 			ResultSet rs = st.executeQuery();
 			
-			preguntas = new LinkedList<>();
 			while(rs.next()) {
 				Pregunta p = new Pregunta();
 				p.setId(rs.getInt("id"));
@@ -127,7 +126,6 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 				p.setRespuesta(rs.getString("respuesta"));
 				p.setFecha( (Date) rs.getObject("fecha"));
 				p.setCorrecta(rs.getBoolean("correcta"));
-				
 				preguntas.add(p);
 			}
 		} catch (SQLException e) {
@@ -156,7 +154,6 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 				pregunta.setId(id);
 				aspirante.getPreguntas().add(pregunta);
 			}
-				
 		} catch (SQLException e) {
 			pregunta = null;
 			e.printStackTrace();
@@ -177,6 +174,70 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 			e.printStackTrace();
 		}
 		return pregunta;
+	}
+
+	@Override
+	public void calificarPregunta(int id, boolean correcta) {
+		String sql = "UPDATE pregunta set correcta = ? where id = ?;";
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setBoolean(1, correcta);
+			st.setInt(2, id);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int contarPreguntas(Aspirante aspirante) {
+		String sql = "select count(*) from pregunta where Aspirante_id = ?;";
+		int n = -1;
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql);
+			st.setInt(1, aspirante.getId());
+			ResultSet rs = st.executeQuery();
+			
+			if (rs != null && rs.next()) {
+				n = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+
+	@Override
+	public int contarPreguntasCorrectas(Aspirante aspirante) {
+		String sql = "select count(*) from pregunta where Aspirante_id = ? and correcta = true;";
+		int n = -1;
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql);
+			st.setInt(1, aspirante.getId());
+			ResultSet rs = st.executeQuery();
+			
+			if (rs != null && rs.next()) {
+				n = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+
+	@Override
+	public Aspirante puntuarAspirante(Aspirante aspirante) {
+		String sql = "UPDATE aspirante set puntuacion = ? where id = ?;";
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setDouble(1, aspirante.getPuntuacion());
+			st.setInt(2, aspirante.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			aspirante= null;
+			e.printStackTrace();
+		}
+		return aspirante;
 	}
 
 }

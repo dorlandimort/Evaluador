@@ -23,8 +23,6 @@ public class VentanaEvaluador extends JFrame {
 		this.setTitle("Servidor");
 		this.setSize(1000, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		this.panelBitacora = new PanelBitacora();
 		this.panelReporte = new PanelReporte();
 	}
 	

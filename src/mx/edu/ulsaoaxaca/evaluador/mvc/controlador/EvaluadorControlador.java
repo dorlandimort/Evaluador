@@ -2,11 +2,14 @@ package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
 import java.awt.Component;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
+import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Sesion;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelEvaluacion;
@@ -29,7 +32,7 @@ public class EvaluadorControlador {
 	
 	private Map<Integer, ClienteListModel> clientesConectados;
 	
-	private String[] titulos = {"No.", "Pregunta", "Respuesta", "Aspirante", "Correcto", "Enviar"};
+	private String[] titulos = {"Id", "Pregunta", "Respuesta", "Aspirante", "Correcto"};
 	
 	public EvaluadorControlador() {
 		this.init();
@@ -42,8 +45,6 @@ public class EvaluadorControlador {
 		this.clientesConectados = new HashMap<>();
 		
 		Object data[][] = {
-				{new Integer(1), "¿Qué te gusta hacer?", "Programar", "Alondra Soledad", new Boolean(true), new Boolean(false)},
-				{new Integer(2), "¿En qué lenguaje?", "Java", "Alondra Soledad", new Boolean(true), new Boolean(false)}
 		};
 		
 		this.ventanaEvaluador.setPanelEvaluacion(new PanelEvaluacion(data, this.titulos));
@@ -56,8 +57,10 @@ public class EvaluadorControlador {
 		// Listener para la lista de aspirantes
 		this.ventanaEvaluador.listaClientes().addListSelectionListener(e -> {
 			ClienteListModel cliente = (ClienteListModel) this.ventanaEvaluador.listaClientes().getSelectedValue();
-			System.out.println(cliente);
 			this.clienteSeleccionado = cliente;
+			this.actualizarPreguntasEnviadas();
+			this.actualizarPreguntasEvaluacion();
+			
 		});
 		
 		// Listener para boton de enviar pregunta
@@ -66,17 +69,54 @@ public class EvaluadorControlador {
 			if (this.clienteSeleccionado != null) {
 				String pregunta = this.ventanaEvaluador.textoPregunta();
 				if (pregunta.isEmpty()) {
-					this.mostrarMensajeDeError(this.ventanaEvaluador, "El campo de progunta no puede estar vacío");
+					this.mostrarMensajeDeError(this.ventanaEvaluador, "El campo de pregunta no puede estar vacío");
 				} else {
 					try {
 						server.enviarPregunta(this.clienteSeleccionado.getCliente(), pregunta);
 						this.ventanaEvaluador.getPanelPreguntas().getTxtPregunta().setText("");
+						this.actualizarPreguntasEvaluacion();
 					} catch (RemoteException ex) {
 						this.mostrarMensajeDeError(this.ventanaEvaluador, "Error de conexión con el cliente");
 					}
 				}
 			} else
 				this.mostrarMensajeDeError(this.ventanaEvaluador, "Seleccione un aspirante antes de enviar una pregunta");
+		});
+		
+		// Listener para evaluar al aspirante
+		this.ventanaEvaluador.getPanelEvaluacion().getBtnEvaluar().addActionListener(e -> {
+			try {
+				Aspirante aspirante = this.clienteSeleccionado.getCliente().getAspirante();
+				DefaultTableModel model = this.ventanaEvaluador.getPanelEvaluacion().getModel();
+				int m = model.getRowCount();
+				int n = model.getColumnCount();
+				Object[][] datos = new Object[m][n];
+				for (int i = 0; i < m; i++) {
+					for (int j = 0; j < n; j++) {
+						datos[i][j] = model.getValueAt(i, j);
+					}
+				}
+				for (int i = 0; i < datos.length; i++) {
+					int id = (int) datos[i][0];
+					System.out.println("id de la pregunta: " + id);
+					
+					boolean correcta = (boolean) datos[i][4];
+					System.out.println("correcta?: " + correcta);
+					this.dao.calificarPregunta(id, correcta);
+				}
+				double total = this.dao.contarPreguntas(aspirante);
+				double correctas = this.dao.contarPreguntasCorrectas(aspirante);
+				System.out.println("total: " + total + " correctas: " + correctas);
+				double puntuacion = correctas * 100 / total; 
+				aspirante.setPuntuacion(puntuacion);
+				this.dao.puntuarAspirante(aspirante);
+				this.mostrarMensaje("Se ha evaluado correctamente, la calificación es de " + puntuacion 
+				+ ". Para más información consulte el reporte.");
+				
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			
 		});
 		
 		this.mostrarVentanaEvaluador();
@@ -133,6 +173,51 @@ public class EvaluadorControlador {
 	
 	public void agregarPregunta(Pregunta pregunta) {
 		this.ventanaEvaluador.getPanelPreguntas().getPreguntasEnviadasModelo().addElement(pregunta);
+	}
+	
+	public void actualizarPreguntasEvaluacion() {
+		try {
+			List<Pregunta> preguntas = dao.obtenerPreguntas(this.clienteSeleccionado.getCliente().getAspirante());
+			this.clienteSeleccionado.getCliente().getAspirante().setPreguntas(preguntas);
+			if (preguntas.size() > 0) {
+				Object[][] datos = new Object[preguntas.size()][5]; 
+				for (int i = 0; i < preguntas.size(); i++) {
+					Pregunta p = preguntas.get(i);
+					datos[i][0] = p.getId();
+					datos[i][1] = p.getPregunta();
+					datos[i][2] = p.getRespuesta();
+					datos[i][3] = this.clienteSeleccionado.getCliente().getAspirante().getNombre();
+					datos[i][4] = false;
+							
+				}
+				this.ventanaEvaluador.getPanelEvaluacion().agregarDatosTabla(datos);
+			} else {
+				Object[][] datos = new Object[0][4];
+				this.ventanaEvaluador.getPanelEvaluacion().agregarDatosTabla(datos);
+			}
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void actualizarPreguntasEnviadas() {
+		try {
+			this.ventanaEvaluador.getPanelPreguntas().getPreguntasEnviadasModelo().clear();
+			List<Pregunta> preguntas = dao.obtenerPreguntas(this.clienteSeleccionado.getCliente().getAspirante());
+			this.clienteSeleccionado.getCliente().getAspirante().setPreguntas(preguntas);
+			for (Pregunta p : preguntas) {
+				this.ventanaEvaluador.getPanelPreguntas().getPreguntasEnviadasModelo().addElement(p);
+			}
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 

@@ -76,7 +76,6 @@ public class PanelPreguntas extends JPanel {
 		this.panelPreguntas = new JPanel();
 		this.panelPreguntas.setBounds(50, 300, 500, 200);
 		this.panelPreguntas.setBorder(this.bordePreguntas);
-		this.panelPreguntas.setLayout(null);
 		
 		String[] preguntas = {"Pregunta 1", "Pregunta2", "Pregunta3" };
 		
@@ -84,15 +83,12 @@ public class PanelPreguntas extends JPanel {
 		this.preguntasEnviadas = new JList<>(preguntasEnviadasModelo);
 		this.preguntasEnviadas.setBounds(20, 20, 470, 100);
 		
-		this.btnEnviarPregunta = new JButton("Enviar");
-		this.btnEnviarPregunta.setBounds(200, 140, 100, 20);
+		JScrollPane scrollPreguntasEnviadas = new JScrollPane(this.preguntasEnviadas);
+		scrollPreguntasEnviadas.setPreferredSize(new Dimension(460, 150));
 		
-		this.btnEliminarPregunta = new JButton("Eliminar");
-		this.btnEliminarPregunta.setBounds(310, 140, 100, 20);
+		this.panelPreguntas.add(scrollPreguntasEnviadas);
 		
-		this.panelPreguntas.add(this.preguntasEnviadas);
-		this.panelPreguntas.add(this.btnEnviarPregunta);
-		this.panelPreguntas.add(this.btnEliminarPregunta);
+		
 		
 		this.panelAspirantes = new JPanel();
 		this.panelAspirantes.setBounds(570, 50, 300, 450);

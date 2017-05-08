@@ -47,12 +47,15 @@ public class Pregunta implements Serializable {
 	public void setRespuesta(String respuesta) {
 		this.respuesta = respuesta;
 	}
+	
 	public boolean isCorrecta() {
 		return correcta;
 	}
+
 	public void setCorrecta(boolean correcta) {
 		this.correcta = correcta;
 	}
+
 	public Date getFecha() {
 		return fecha;
 	}

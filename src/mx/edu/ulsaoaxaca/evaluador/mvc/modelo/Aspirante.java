@@ -11,7 +11,7 @@ public class Aspirante implements Serializable {
 	private int edad;
 	private String escolaridad;
 	private String puesto;
-	
+	private Double puntuacion;
 	private Sesion sesion;
 	private List<Pregunta> preguntas;
 	
@@ -73,6 +73,14 @@ public class Aspirante implements Serializable {
 
 	public void setSesion(Sesion sesion) {
 		this.sesion = sesion;
+	}
+
+	public Double getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(Double puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 	
 	
