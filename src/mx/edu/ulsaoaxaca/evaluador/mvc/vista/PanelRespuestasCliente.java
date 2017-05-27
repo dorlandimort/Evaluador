@@ -17,6 +17,7 @@ public class PanelRespuestasCliente extends JPanel implements Serializable {
 	private static final long serialVersionUID = 7090975003745217598L;
 	private JLabel lblEvaluador;
 	private JButton btnSalir;
+	private JButton btnReporte;
 	private JButton btnEnviarRespuesta;
 	private JTextArea txtRespuesta;
 
@@ -34,6 +35,10 @@ public class PanelRespuestasCliente extends JPanel implements Serializable {
 		
 		this.lblEvaluador = new JLabel();
 		this.lblEvaluador.setBounds(50, 10, 250, 20);
+		
+		this.btnReporte = new JButton("Generar Reporte");
+		this.btnReporte.setBounds(580, 10, 200, 20);
+		
 		this.btnSalir = new JButton("Salir");
 		this.btnSalir.setBounds(800, 10, 100, 20);
 		
@@ -54,7 +59,7 @@ public class PanelRespuestasCliente extends JPanel implements Serializable {
 		this.btnEnviarRespuesta.setBounds(780, 200, 100, 20);
 		panelRespuesta.add(this.btnEnviarRespuesta);
 		
-		
+		this.add(btnReporte);
 		this.add(btnSalir);
 		this.add(lblEvaluador);
 		this.add(panelPreguntasCliente);
@@ -99,6 +104,14 @@ public class PanelRespuestasCliente extends JPanel implements Serializable {
 
 	public void setPanelPreguntasCliente(PanelPreguntasCliente panelPreguntasCliente) {
 		this.panelPreguntasCliente = panelPreguntasCliente;
+	}
+
+	public JButton getBtnReporte() {
+		return btnReporte;
+	}
+
+	public void setBtnReporte(JButton btnReporte) {
+		this.btnReporte = btnReporte;
 	}
 
 

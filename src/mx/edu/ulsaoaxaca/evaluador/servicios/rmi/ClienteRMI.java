@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
+import net.sf.jasperreports.engine.JasperPrint;
 
 public interface ClienteRMI extends Remote {
 	
@@ -15,6 +16,6 @@ public interface ClienteRMI extends Remote {
 	public void recibirPregunta(Pregunta pregunta) throws RemoteException;
 	public void enviarRespuesta(Pregunta pregunta) throws RemoteException;
 	public Aspirante getAspirante() throws RemoteException;
-
+	public JasperPrint obtenerReporte(Aspirante aspirante) throws RemoteException;
 	
 }

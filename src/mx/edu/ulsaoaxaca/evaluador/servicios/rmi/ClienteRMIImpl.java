@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import mx.edu.ulsaoaxaca.evaluador.mvc.controlador.ClienteControlador;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
+import net.sf.jasperreports.engine.JasperPrint;
 
 public class ClienteRMIImpl implements ClienteRMI, Serializable {
 	
@@ -91,6 +92,12 @@ public class ClienteRMIImpl implements ClienteRMI, Serializable {
 	public void registrarCliente(ClienteRMI cliente) throws RemoteException {
 		server.registrarCliente(this);
 		
+	}
+
+
+	@Override
+	public JasperPrint obtenerReporte(Aspirante aspirante) throws RemoteException {
+		return this.server.obtenerReporte(aspirante);
 	}
 	
 	

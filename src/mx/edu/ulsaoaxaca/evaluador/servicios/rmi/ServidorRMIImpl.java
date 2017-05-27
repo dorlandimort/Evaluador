@@ -3,6 +3,7 @@ package mx.edu.ulsaoaxaca.evaluador.servicios.rmi;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
@@ -11,6 +12,8 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAO;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAOImpl;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class ServidorRMIImpl implements ServidorRMI, Serializable {
 
@@ -67,6 +70,15 @@ public class ServidorRMIImpl implements ServidorRMI, Serializable {
 		this.dao.actualizarPregunta(pregunta);
 		this.controlador.mostrarMensaje(cliente.getAspirante().getNombre() + " contestó: " + pregunta.getRespuesta());
 		this.controlador.actualizarPreguntasEvaluacion();
+	}
+
+	@Override
+	public JasperPrint obtenerReporte(Aspirante aspirante) throws RemoteException {
+		Map<String, Object> params = this.controlador.generarParametrosAspirante(aspirante);
+		List<Map<String, String>> campos = this.controlador.generarListaPreguntasReporte(aspirante);
+		JRBeanCollectionDataSource dataSource =  new JRBeanCollectionDataSource(campos);
+		JasperPrint jp = this.controlador.generarJasperPrint("reports/evaluacion.jrxml", params, dataSource);
+		return jp;
 	}
 
 }

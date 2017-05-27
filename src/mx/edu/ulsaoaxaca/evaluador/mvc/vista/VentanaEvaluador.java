@@ -32,7 +32,6 @@ public class VentanaEvaluador extends JFrame {
 		this.panelPestañas = new JTabbedPane();
 		this.panelPestañas.addTab("Preguntas", this.panelPreguntas);
 		this.panelPestañas.addTab("Evaluación", this.panelEvaluacion);
-		this.panelPestañas.addTab("Reporte", this.panelReporte);
 		
 		this.add(panelPestañas);
 	}

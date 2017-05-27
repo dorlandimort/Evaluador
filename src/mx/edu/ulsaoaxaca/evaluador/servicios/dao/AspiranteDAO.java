@@ -17,5 +17,6 @@ public interface AspiranteDAO {
 	public int contarPreguntas(Aspirante aspirante);
 	public int contarPreguntasCorrectas(Aspirante aspirante);
 	public Aspirante puntuarAspirante(Aspirante aspirante);
+	public int obtenerPuntuacion(Aspirante aspirante);
 	
 }

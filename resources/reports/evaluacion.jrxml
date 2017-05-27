@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-26T01:45:16 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="evaluacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="710f97e8-ef54-4962-a6e7-4a9a557edac9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="imagen" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="evaluador" class="java.lang.String"/>
+	<parameter name="aspirante" class="java.lang.String"/>
+	<parameter name="edad" class="java.lang.String"/>
+	<parameter name="escolaridad" class="java.lang.String"/>
+	<parameter name="puesto" class="java.lang.String"/>
+	<parameter name="puntuacion" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="pregunta" class="java.lang.String"/>
+	<field name="respuesta" class="java.lang.String"/>
+	<field name="correcta" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="245" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="116" width="210" height="20" uuid="7d6af6c4-520c-4f99-bbec-19641ba37d50"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE dd-MM-yyyy hh:mm a").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="91" width="244" height="20" uuid="1c75a61a-c36f-46ba-bbf2-abd1db16b5ad"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Evaluador: " + $P{evaluador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="91" width="210" height="20" uuid="5eab0fb9-0832-4073-9eac-a40ba341d359"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aspirante: " + $P{aspirante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="116" width="244" height="20" uuid="c7f7a162-51c0-4cbe-a9a0-3321c6351099"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Puesto: " + $P{puesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="163" width="209" height="20" uuid="33dffb8a-0a33-4b93-8b20-98411172aea6"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Edad: " + $P{edad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="141" width="244" height="20" uuid="df1ee91f-67f6-467b-beb0-f7e52a596f4f"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Escolaridad: " + $P{escolaridad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="180" width="400" height="30" uuid="40bd3884-4ca5-4291-a166-80b5edc13d2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Puntuación: " + $P{puntuacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="212" width="400" height="29" uuid="7e8d22e6-1e06-4e68-92c8-c01da8e51829"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preguntas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="20" width="328" height="60" uuid="009ee9b0-3460-428b-8641-81b24fe40429"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE EVALUACIÓN]]></text>
+			</staticText>
+			<image>
+				<reportElement x="40" y="20" width="140" height="68" uuid="283884b0-2576-4ff1-94c3-0b69e43743f9"/>
+				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="150" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="" positionType="Float" x="40" y="50" width="239" height="50" uuid="59642e26-0ac7-4e6d-b19a-241e5fa5313e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pregunta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="289" y="50" width="221" height="50" uuid="e4aa9e43-dbfd-447a-9b98-f454fbf23204"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{respuesta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="41" y="114" width="280" height="20" uuid="0ad5946b-0c7b-4483-bb24-cc2687d3ec48"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Calificación: " + $F{correcta}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="41" y="140" width="467" height="1" uuid="b973e1a7-0cdc-4f61-89e0-51881fa5b56a"/>
+			</line>
+			<staticText>
+				<reportElement x="300" y="20" width="209" height="18" uuid="f61d60e1-915d-4dab-a3fb-30bb133aa734"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Respuesta]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="20" width="223" height="18" uuid="46b92543-f0b9-4929-8e82-bf2d8a4663f8"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pregunta " + $F{numero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34">
+			<textField>
+				<reportElement x="402" y="4" width="90" height="30" uuid="647a33f7-d7e6-484b-9f78-ed59df1d189a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="494" y="4" width="60" height="30" uuid="aa61bb7d-a773-484a-9df3-8a2a96c90c90"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

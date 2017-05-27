@@ -9,6 +9,8 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaAspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaRegistro;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMIImpl;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class ClienteControlador implements Serializable {
 	
@@ -80,6 +82,8 @@ public class ClienteControlador implements Serializable {
 			}
 			
 		});
+		
+		
 		this.ventanaRegistro.getBtnSalir().addActionListener(e -> {
 			this.ventanaRegistro.dispose();
 			
@@ -132,6 +136,15 @@ public class ClienteControlador implements Serializable {
 			} else
 				this.mostrarError("Seleccione una pregunta a responder");
 			
+		});
+		this.ventanaAspirante.getPanelRespuestas().getBtnReporte().addActionListener(e -> {
+			try {
+				JasperPrint jasperPrint = this.clienteRMI.obtenerReporte(this.clienteRMI.getAspirante());
+				JasperViewer.viewReport(jasperPrint, false);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		this.ventanaAspirante.setVisible(true);
 		this.cerrarVentanaRegistro();

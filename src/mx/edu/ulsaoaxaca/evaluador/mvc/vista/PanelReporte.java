@@ -40,4 +40,56 @@ public class PanelReporte extends JPanel {
 		this.add(this.btnExportar);
 		
 	}
+
+
+	public JLabel getLblReporte() {
+		return lblReporte;
+	}
+
+
+	public void setLblReporte(JLabel lblReporte) {
+		this.lblReporte = lblReporte;
+	}
+
+
+	public JLabel getLblEvaluador() {
+		return lblEvaluador;
+	}
+
+
+	public void setLblEvaluador(JLabel lblEvaluador) {
+		this.lblEvaluador = lblEvaluador;
+	}
+
+
+	public TitledBorder getBordePregunta() {
+		return bordePregunta;
+	}
+
+
+	public void setBordePregunta(TitledBorder bordePregunta) {
+		this.bordePregunta = bordePregunta;
+	}
+
+
+	public JPanel getPanelPregunta() {
+		return panelPregunta;
+	}
+
+
+	public void setPanelPregunta(JPanel panelPregunta) {
+		this.panelPregunta = panelPregunta;
+	}
+
+
+	public JButton getBtnExportar() {
+		return btnExportar;
+	}
+
+
+	public void setBtnExportar(JButton btnExportar) {
+		this.btnExportar = btnExportar;
+	}
+	
+	
 }

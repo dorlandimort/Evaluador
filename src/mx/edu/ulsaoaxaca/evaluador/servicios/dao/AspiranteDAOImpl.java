@@ -240,4 +240,22 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 		return aspirante;
 	}
 
+	@Override
+	public int obtenerPuntuacion(Aspirante aspirante) {
+		String sql = "select puntuacion from aspirante where id = ?;";
+		int n = -1;
+		try {
+			PreparedStatement st = this.ds.getConnection().prepareStatement(sql);
+			st.setInt(1, aspirante.getId());
+			ResultSet rs = st.executeQuery();
+			
+			if (rs != null && rs.next()) {
+				n = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+
 }

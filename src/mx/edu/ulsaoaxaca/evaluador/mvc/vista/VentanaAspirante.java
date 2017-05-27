@@ -23,10 +23,8 @@ public class VentanaAspirante extends JFrame implements Serializable {
 		panelPestañas = new JTabbedPane();
 		
 		this.panelRespuestas = new PanelRespuestasCliente();
-		this.panelReporte = new PanelReporte();
 		
 		this.panelPestañas.addTab("Respuestas", this.panelRespuestas);
-		this.panelPestañas.addTab("Reporte", this.panelReporte);
 		
 		this.add(this.panelPestañas);
 		

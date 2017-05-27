@@ -1,7 +1,10 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
 import java.awt.Component;
+import java.io.InputStream;
+import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +20,14 @@ import mx.edu.ulsaoaxaca.evaluador.mvc.vista.PanelPreguntas;
 import mx.edu.ulsaoaxaca.evaluador.mvc.vista.VentanaEvaluador;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAO;
 import mx.edu.ulsaoaxaca.evaluador.servicios.dao.AspiranteDAOImpl;
-import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ServidorRMI;
-
-import java.rmi.RemoteException;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class EvaluadorControlador {
 	
@@ -119,6 +126,13 @@ public class EvaluadorControlador {
 			
 		});
 		
+		// listener para generar el reporte de la evaluacion
+		
+		this.ventanaEvaluador.getPanelEvaluacion().getBtnReporte().addActionListener(e -> {
+			generarReporte();
+			
+		});
+		
 		this.mostrarVentanaEvaluador();
 		
 		String nombre = JOptionPane.showInputDialog(this.ventanaEvaluador, "Ingrese su nombre");
@@ -187,7 +201,7 @@ public class EvaluadorControlador {
 					datos[i][1] = p.getPregunta();
 					datos[i][2] = p.getRespuesta();
 					datos[i][3] = this.clienteSeleccionado.getCliente().getAspirante().getNombre();
-					datos[i][4] = false;
+					datos[i][4] = p.isCorrecta();
 							
 				}
 				this.ventanaEvaluador.getPanelEvaluacion().agregarDatosTabla(datos);
@@ -218,6 +232,124 @@ public class EvaluadorControlador {
 		}
 		
 		
+	}
+	
+	/**
+	 * Método usado para generar el ReportViewer de Jasper Reports
+	 */
+	private void generarReporte() {
+		System.out.println("Generar Reporte");
+		Map<String, Object> params = new HashMap<>();
+		try {
+			if (this.clienteSeleccionado != null) {
+				Aspirante aspirante = this.clienteSeleccionado.getCliente().getAspirante();
+				int puntuacion = this.dao.obtenerPuntuacion(aspirante);
+				params.put("evaluador", this.sesionActual.getEvaluador());
+				params.put("aspirante", aspirante.getNombre());
+				params.put("edad", aspirante.getEdad() + " años");
+				params.put("escolaridad", aspirante.getEscolaridad());
+				params.put("puesto", aspirante.getPuesto());
+				if (puntuacion == -1)
+					params.put("puntuacion", "0 puntos");
+				else
+					params.put("puntuacion", puntuacion + " puntos");
+				params.put("fecha", sesionActual.getFecha().toString());
+				
+				List<Map<String, String>> listaPreguntas = new LinkedList<>();
+				List<Pregunta> preguntas = this.dao.obtenerPreguntas(aspirante);
+				int i = 0;
+				for (Pregunta p : preguntas) {
+					Map<String, String> campos = new HashMap<>();
+					campos.put("numero", (++i) + "");
+					campos.put("pregunta", p.getPregunta());
+					if (p.getRespuesta() == null)
+						campos.put("respuesta", "N/R");
+					else
+						campos.put("respuesta", p.getRespuesta());
+					if (p.isCorrecta())
+						campos.put("correcta", "Correcta");
+					else
+						campos.put("correcta", "Incorrecta");
+					
+					listaPreguntas.add(campos);
+				}
+				
+				params.put("imagen", "images/evaluacion.png");
+				
+				// DataSource para el reporte
+				JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaPreguntas);
+				this.mostrarReporte("reports/evaluacion.jrxml", params, dataSource);
+			} else
+				this.mostrarMensajeDeError(this.ventanaEvaluador, "No se ha seleccionado un aspirante");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	public JasperPrint generarJasperPrint(String archivo, Map<String, Object> params, JRBeanCollectionDataSource dataSource) {
+		// compilar el reporte
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream(archivo);
+		JasperReport report;
+		try {
+			report = JasperCompileManager.compileReport(is);
+			return JasperFillManager.fillReport(report, params, dataSource);
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
+		return null;
+				
+	}
+	
+	public Map<String, Object> generarParametrosAspirante(Aspirante aspirante) {
+		Map<String, Object> params = new HashMap<>();
+		int puntuacion = this.dao.obtenerPuntuacion(aspirante);
+		params.put("evaluador", this.sesionActual.getEvaluador());
+		params.put("aspirante", aspirante.getNombre());
+		params.put("edad", aspirante.getEdad() + " años");
+		params.put("escolaridad", aspirante.getEscolaridad());
+		params.put("puesto", aspirante.getPuesto());
+		if (puntuacion == -1)
+			params.put("puntuacion", "0 puntos");
+		else
+			params.put("puntuacion", puntuacion + " puntos");
+		params.put("fecha", sesionActual.getFecha().toString());
+		params.put("imagen", "images/evaluacion.png");
+		return params;
+	}
+	
+	public List<Map<String, String>> generarListaPreguntasReporte(Aspirante aspirante) {
+		List<Map<String, String>> listaPreguntas = new LinkedList<>();
+		List<Pregunta> preguntas = this.dao.obtenerPreguntas(aspirante);
+		int i = 0;
+		for (Pregunta p : preguntas) {
+			Map<String, String> campos = new HashMap<>();
+			campos.put("numero", (++i) + "");
+			campos.put("pregunta", p.getPregunta());
+			if (p.getRespuesta() == null)
+				campos.put("respuesta", "N/R");
+			else
+				campos.put("respuesta", p.getRespuesta());
+			if (p.isCorrecta())
+				campos.put("correcta", "Correcta");
+			else
+				campos.put("correcta", "Incorrecta");
+			
+			listaPreguntas.add(campos);
+		}
+		return listaPreguntas;
+	}
+	
+	private void mostrarReporte(String archivo, Map<String, Object> params, JRBeanCollectionDataSource dataSource) throws JRException {
+		// compilar el reporte
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream(archivo);
+		JasperReport report = JasperCompileManager.compileReport(is);
+		// llenar el reporte con los datos
+		JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, dataSource);
+		// mostrar el reporte en el JasperViewer
+		JasperViewer.viewReport(jasperPrint, false);
 	}
 	
 

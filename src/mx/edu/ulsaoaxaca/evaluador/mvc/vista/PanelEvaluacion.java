@@ -38,8 +38,12 @@ public class PanelEvaluacion extends JPanel {
 		this.btnEvaluar = new JButton("Evaluar y terminar");
 		this.btnEvaluar.setBounds(50, 450, 200, 20 );
 		
+		this.btnReporte = new JButton("Generar reporte");
+		this.btnReporte.setBounds(270, 450, 200, 20);
+		
 		this.agregarTabla(data);
 		panel.add(this.btnEvaluar);
+		panel.add(btnReporte);
 		this.add(panel);
 		
 	}
