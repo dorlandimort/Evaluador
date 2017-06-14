@@ -16,7 +16,6 @@ public class Servidor {
 	
 	public static void main(String ... args) {
 		
-		
 		try {
 			EvaluadorControlador controlador = new EvaluadorControlador();
 			ServidorRMI obj = new ServidorRMIImpl(controlador);

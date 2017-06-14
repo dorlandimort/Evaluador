@@ -1,0 +1,25 @@
+Manual de instalación
+
+Para el servidor
+
+    Prerrequisitos
+        - Java JDK 8
+        - Mysql server 5.6
+    
+    Pasos de instalación
+
+        - Abrir la consola de MySQL y ejecutar pegar el contenido del archivo script.sql
+        - Abrir la terminal en el directorio del jar servidor.jar
+        - ejecutar el comando: java -jar servidor.jar
+
+Para el cliente
+
+    Prerrequisitos
+        -Java JDK 8
+
+    Pasos de instalación 
+
+        - Abrir la terminal en el directorio del jar cliente.jar
+        - ejecutar el comando: java -jar cliente.jar
+    
+

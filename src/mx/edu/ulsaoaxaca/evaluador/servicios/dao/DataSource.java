@@ -18,7 +18,7 @@ public class DataSource {
 			
 			this.connection =
 					DriverManager.getConnection("jdbc:mysql://localhost/evaluador?" +
-				                                   "user=root&password=toor");
+				                                   "user=root");
 			
 		} catch (InstantiationException e) {
 			
