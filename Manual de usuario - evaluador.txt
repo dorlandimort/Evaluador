@@ -1,0 +1,37 @@
+
+Manual de usuario
+
+    Para el servidor
+        Descripción de las interfaces de usuario
+
+       * Mostrar captura de pantalla del panel principal y describir su contenido.
+            + Panel de aspirantes conectados: Se muestran los aspirantes que se han conectado al servidor.
+            + Panel de redacción de preguntas: En este panel se puede redactar la pregunta que desee enviar a un aspirante.
+            + Panel de preguntas enviadas: Se muestra la lista de preguntas que se han enviado al aspirante seleccionado.
+
+       * Mostrar captura de pantalla del panel de evaluación y describir su contenido.
+            + Tabla de preguntas enviadas: En esta tabla se muestran todas las preguntas y respuestas de las mismas que han 
+            sido enviadas al aspirante seleccionado. Aquí se pueden marcar las respuestas como correctas o incorrectas.
+            + Área de opciones: Muestra dos botones: "Evaluar" Evalúa las preguntas de acuerdo a como las marcó el usuario en la tabla.
+
+        Enviar pregunta a un aspirante
+            + Seleccionar al aspirante deseado en el panel de aspirantes conectados.
+            + Redactar su pregunta en el panel de redacción de preguntas, una vez finalizada la redacción, hacer clic
+                en el botón "Enviar pregunta"
+            + La pregunta enviada aparecerá en el área de preguntas enviadas.
+
+        Recibir respuesta del aspirante
+            + Cuando el aspirante responda una pregunta, le llegará una notificación con información del aspirante que ha 
+            contestado y la respuesta que ha enviado. Dicha respuesta ya puede ser vista en el panel de evaluación.
+        Evaluar a un aspirante  
+            + Seleccionar al aspirante a evaluar del panel de aspirantes conectados y entre al panel de evaluación.
+            + Una vez en el panel de evaluación, en la última columna de la tabla marque las preguntas de acuerdo a su criterio,
+            el checkbox marcado significa que la respuesta fué correcta, si lo deja sin marcar significará entonces que la
+            respuesta es incorrecta. 
+            + Cuando haya finalizado su evaluación, haga clic en el botón "Evaluar y terminar" y opcionalmente puede generar el reporte haciendo clic
+            en el botón "Generar reporte".
+
+
+    
+
+    
