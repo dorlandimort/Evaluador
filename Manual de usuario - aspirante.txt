@@ -1,0 +1,31 @@
+
+Manual de usuario
+
+    Para el aspirante
+
+        Descripción de las interfaces de usuario
+
+        * mostrar captura de la pantalla de registro y la ventana principal y describir su contenido
+
+
+        Registro en el sistema de evaluación
+
+            + Llenar todos los campos del formulario de registro (todos los campos son necesarios)
+            + En el campo "Dirección IP" ingrese la dirección del servidor que le haya sido indicada en caso de ser
+            diferente a la dirección por defecto.
+            + Si ha llenado todos los campos correctamente, haga clic en el botón "Ingresar"
+            + Si desea cancelar su registro, haga clic en el botón cancelar.
+
+        Entrevista 
+
+            + Una vez que ha accedido al sistema se le notificará a su evaluador, asimismo se mostrará el nombre del evaluador asignado.
+            + Cuando su evaluador le haya enviado una pregunta le llegará una notificación indicando que la pregunta ha sido
+            añadida a su lista de preguntas pendientes.
+            + Cuando desee contestar una pregunta, debe seleccionar la pregunta de su lista de preguntas pendientes y redactar su respuesta en el 
+            área de redacción de preguntas.
+            + Una vez haya finalizado de redactar su respuesta, haga clic en el botón "Enviar"
+            + Su pregunta ahora ha sido enviada a su evaluador para su revisión.
+            + Si lo desea puede generar el reporte de su evaluación haciendo clic en el botón "Generar reporte"
+
+        En caso de que quiera salir de la evaluación, puede hacer clic en el botón "Salir" Todo su progreso será entonces borrado.
+        
