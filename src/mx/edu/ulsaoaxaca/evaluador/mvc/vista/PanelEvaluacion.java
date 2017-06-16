@@ -7,10 +7,14 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import mx.edu.ulsaoaxaca.evaluador.misc.PreguntasModel;
 
 public class PanelEvaluacion extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private TitledBorder bordePreguntas;
 	
 	private JPanel panel;
@@ -48,9 +52,11 @@ public class PanelEvaluacion extends JPanel {
 		
 	}
 	
+	@SuppressWarnings("serial")
 	private void agregarTabla(Object[][] data) {
 		 this.model = new DefaultTableModel(data, this.titulos) {
-            public Class getColumnClass(int c) {
+            @SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int c) {
               switch (c) {
                 case 4: return Boolean.class;
                 default: return String.class;

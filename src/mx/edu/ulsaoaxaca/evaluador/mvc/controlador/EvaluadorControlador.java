@@ -39,7 +39,7 @@ public class EvaluadorControlador {
 	
 	private Map<Integer, ClienteListModel> clientesConectados;
 	
-	private String[] titulos = {"Id", "Pregunta", "Respuesta", "Aspirante", "Correcto"};
+	private String[] titulos = {"Id", "Pregunta", "Respuesta", "Aspirante", "Evaluación"};
 	
 	public EvaluadorControlador() {
 		this.init();

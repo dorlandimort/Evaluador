@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Sesion implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private Date fecha;
 	private String evaluador;

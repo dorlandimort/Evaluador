@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DataSource {
 	
@@ -18,7 +17,7 @@ public class DataSource {
 			
 			this.connection =
 					DriverManager.getConnection("jdbc:mysql://localhost/evaluador?" +
-				                                   "user=root");
+				                                   "user=root&password=toor");
 			
 		} catch (InstantiationException e) {
 			

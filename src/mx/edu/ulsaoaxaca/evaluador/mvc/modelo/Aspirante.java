@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Aspirante implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nombre;
 	private int edad;

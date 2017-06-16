@@ -3,27 +3,26 @@ package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
 import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class VentanaEvaluador extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane panelPestañas;
 	private PanelPreguntas panelPreguntas;
-	private PanelBitacora panelBitacora;
 	private PanelEvaluacion panelEvaluacion;
-	private PanelReporte panelReporte;
 	
 	
 	public VentanaEvaluador() {
 		this.setTitle("Servidor");
 		this.setSize(1000, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.panelReporte = new PanelReporte();
 	}
 	
 	public void addTabs() {
@@ -75,14 +74,6 @@ public class VentanaEvaluador extends JFrame {
 		this.panelPreguntas = panelPreguntas;
 	}
 
-	public PanelBitacora getPanelBitacora() {
-		return panelBitacora;
-	}
-
-	public void setPanelBitacora(PanelBitacora panelBitacora) {
-		this.panelBitacora = panelBitacora;
-	}
-
 	public PanelEvaluacion getPanelEvaluacion() {
 		return panelEvaluacion;
 	}
@@ -91,15 +82,7 @@ public class VentanaEvaluador extends JFrame {
 		this.panelEvaluacion = panelEvaluacion;
 	}
 
-	public PanelReporte getPanelReporte() {
-		return panelReporte;
-	}
 
-	public void setPanelReporte(PanelReporte panelReporte) {
-		this.panelReporte = panelReporte;
-	}
-	
-	
 	
 
 }

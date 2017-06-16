@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.SortingFocusTraversalPolicy;
-
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Aspirante;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Sesion;
@@ -85,6 +83,7 @@ public class AspiranteDAOImpl implements AspiranteDAO {
 		return aspirante;
 	}
 
+	@SuppressWarnings("unused")
 	private Aspirante obtenerAspirante(int id) {
 		Aspirante aspirante = null;
 		try {

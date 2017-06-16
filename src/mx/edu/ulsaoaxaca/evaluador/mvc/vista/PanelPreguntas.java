@@ -1,8 +1,6 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.vista;
 
 import java.awt.Dimension;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,13 +8,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import mx.edu.ulsaoaxaca.evaluador.misc.ClienteListModel;
-import mx.edu.ulsaoaxaca.evaluador.misc.ListaClientesCellRenderer;
 import mx.edu.ulsaoaxaca.evaluador.mvc.modelo.Pregunta;
-import mx.edu.ulsaoaxaca.evaluador.servicios.rmi.ClienteRMI;
 
 public class PanelPreguntas extends JPanel {
 	
@@ -48,6 +43,7 @@ public class PanelPreguntas extends JPanel {
 	
 	
 	
+	@SuppressWarnings("unused")
 	public PanelPreguntas() {
 		this.setLayout(null);
 		

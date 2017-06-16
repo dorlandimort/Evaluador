@@ -99,7 +99,14 @@ public class ClienteControlador implements Serializable {
 		this.ventanaRegistro.setVisible(false);
 	}
 	
+	public void limpiarVentanaRegistro() {
+		this.ventanaRegistro.getTxtEscolaridad().setText("");
+		this.ventanaRegistro.getTxtNombre().setText("");
+		this.ventanaRegistro.getTxtPuesto().setText("");
+	}
+	
 	public void mostrarVentanaClientePrincipal() {
+		this.limpiarVentanaRegistro();
 		this.ventanaAspirante = new VentanaAspirante();
 		this.ventanaAspirante.getPanelRespuestas().getBtnSalir().addActionListener(e -> {
 			int salir = JOptionPane.showConfirmDialog(this.ventanaAspirante, "Todo su progreso se perderá!", "Está seguro que desea salir?", JOptionPane.YES_NO_OPTION);
