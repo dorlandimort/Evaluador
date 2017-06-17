@@ -15,4 +15,5 @@ public interface ServidorRMI extends Remote {
 	public void enviarPregunta(ClienteRMI cliente, String pregunta) throws RemoteException;
 	public void recibirRespuesta(ClienteRMI cliente, Pregunta pregunta) throws RemoteException;
 	public JasperPrint obtenerReporte(Aspirante aspirante) throws RemoteException;
+	public void desconectar() throws RemoteException;
 }

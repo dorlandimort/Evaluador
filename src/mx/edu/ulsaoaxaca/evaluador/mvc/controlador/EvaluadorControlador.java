@@ -1,6 +1,8 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
 import java.awt.Component;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -150,6 +152,58 @@ public class EvaluadorControlador {
 		} else {
 			this.cerrarVentanaEvaluador();
 		}
+		
+		this.ventanaEvaluador.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					server.desconectar();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 	}
 	
 	public void mostrarVentanaEvaluador() {

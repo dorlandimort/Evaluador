@@ -1,5 +1,7 @@
 package mx.edu.ulsaoaxaca.evaluador.mvc.controlador;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
@@ -89,6 +91,7 @@ public class ClienteControlador implements Serializable {
 			
 		});
 		
+		
 	}
 	
 	public void mostrarVentanaRegistro() {
@@ -155,6 +158,56 @@ public class ClienteControlador implements Serializable {
 		});
 		this.ventanaAspirante.setVisible(true);
 		this.cerrarVentanaRegistro();
+		
+		this.ventanaAspirante.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					clienteRMI.desconectar();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 	}
 	

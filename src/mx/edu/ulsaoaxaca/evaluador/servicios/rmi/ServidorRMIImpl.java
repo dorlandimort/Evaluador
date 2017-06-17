@@ -1,7 +1,9 @@
 package mx.edu.ulsaoaxaca.evaluador.servicios.rmi;
 
 import java.io.Serializable;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +81,15 @@ public class ServidorRMIImpl implements ServidorRMI, Serializable {
 		JRBeanCollectionDataSource dataSource =  new JRBeanCollectionDataSource(campos);
 		JasperPrint jp = this.controlador.generarJasperPrint("reports/evaluacion.jrxml", params, dataSource);
 		return jp;
+	}
+	
+	public void desconectar() throws RemoteException {
+		try {
+			UnicastRemoteObject.unexportObject(this, true);
+		} catch (NoSuchObjectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

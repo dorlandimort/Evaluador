@@ -99,6 +99,12 @@ public class ClienteRMIImpl implements ClienteRMI, Serializable {
 	public JasperPrint obtenerReporte(Aspirante aspirante) throws RemoteException {
 		return this.server.obtenerReporte(aspirante);
 	}
+
+
+	@Override
+	public void desconectar() throws RemoteException {
+		UnicastRemoteObject.unexportObject(this, true);
+	}
 	
 	
 
